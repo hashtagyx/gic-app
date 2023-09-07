@@ -1,0 +1,16 @@
+version: 0.0
+os: linux
+files:
+  - source: "/my-app"
+    destination: "/home/ec2-user/my-app"
+hooks:
+  BeforeInstall:
+    - location: codedeployScripts/before_install.sh 
+      timeout: 30
+      runas: root
+  ApplicationStart:
+    - location: codedeployScripts/app_start.sh 
+      timeout: 600
+      runas: root
+
+
