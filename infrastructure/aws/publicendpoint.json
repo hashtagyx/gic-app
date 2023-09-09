@@ -1,0 +1,12 @@
+{
+    "containerName": "gic-hack-1",
+    "containerPort": 3000,
+    "healthCheck": {
+      "healthyThreshold": 2,
+      "unhealthyThreshold": 2,
+      "timeoutSeconds": 2,
+      "intervalSeconds": 5,
+      "path": "/",
+      "successCodes": "200-299"
+    }
+}

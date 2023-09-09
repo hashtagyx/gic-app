@@ -1,0 +1,5 @@
+{"gic-hack-1": {
+    "image": ":gic-hack-1.gic-hack-2.latest",
+    "ports": {"3000": "HTTP"}
+  }
+}

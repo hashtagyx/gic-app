@@ -9,6 +9,8 @@ on:
 env:
   AWS_REGION: ap-southeast-1
   AWS_LIGHTSAIL_SERVICE_NAME: gic-hack-1
+  AWS_LIGHTSAIL_IMAGE_NAME: gic-hack-2
+  AWS_LIGHTSAIL_LABEL_NAME: gic-hack-2
 
 jobs:
 
@@ -37,12 +39,19 @@ jobs:
         aws-region: ${{ env.AWS_REGION }}
       
     - name: Docker build
-      run: docker buildx build --platform linux/amd64 -t gic-hack-2 .
+      run: docker buildx build --platform linux/amd64 -t ${{ env.AWS_LIGHTSAIL_IMAGE_NAME }} .
 
     - name: Upload image to AWS container register
       run: |
         aws lightsail push-container-image \
           --region ${{ env.AWS_REGION }} \
-          --service-name gic-hack-1 \
-          --label gic-hack-2 \
-          --image gic-hack-2:latest
+          --service-name ${{ env.AWS_LIGHTSAIL_SERVICE_NAME }} \
+          --label ${{ env.AWS_LIGHTSAIL_LABEL_NAME }} \
+          --image ${{ env.AWS_LIGHTSAIL_IMAGE_NAME }}:latest
+
+    - name: Deploy the newly pushed image
+      run: |
+        aws lightsail create-container-service-deployment \
+         --service-name ${{ env.AWS_LIGHTSAIL_SERVICE_NAME }} \
+         --containers file://infrastructure/aws/deploymentconfig.json \
+         --public-endpoint file://infrastructure/aws/publicendpoint.json
