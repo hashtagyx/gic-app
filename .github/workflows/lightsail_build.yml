@@ -43,6 +43,6 @@ jobs:
       run: |
         aws lightsail push-container-image \
           --region ${{ env.AWS_REGION }} \
-          --service-name gic-hack-2 \
+          --service-name gic-hack-1 \
           --label gic-hack-2 \
           --image gic-hack-2:latest
